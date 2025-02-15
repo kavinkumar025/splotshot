@@ -1,0 +1,50 @@
+<div class="container mt-5" id="container">
+    <div class="row justify-content-center align-items-center">
+        <div class="col-lg-6 col-md-8 col-sm-10">
+            <div class="form-container sign-up-container">
+                <form>
+                    <div class="social-container">
+                        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+                        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                    <span>or use your email for registration</span>
+                    <input class="form-control" type="text" placeholder="Name" />
+                    <input class="form-control" type="email" placeholder="Email" />
+                    <input class="form-control" type="email" placeholder="Mobile Number" />
+                    <input class="form-control" type="password" placeholder="Password" />
+                    <button class="btn btn-danger">Sign Up</button>
+                </form>
+            </div>
+            <div class="form-container sign-in-container">
+                <form>
+                    <h1>Sign in</h1>
+                    <div class="social-container">
+                        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+                        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                    <span>or use your account</span>
+                    <input class="form-control" type="email" placeholder="Email" />
+                    <input class="form-control" type="password" placeholder="Password" />
+                    <a href="#">Forgot your password?</a>
+                    <button class="btn btn-danger">Sign In</button>
+                </form>
+            </div>
+            <div class="overlay-container">
+                <div class="overlay">
+                    <div class="overlay-panel overlay-left">
+                        <h1>Welcome to Splotshot!</h1>
+                        <p>Sign up and start sharing your videos with the world.</p>
+                        <button class="ghost" (click)="signInButtonClick()">Sign In</button>
+                    </div>
+                    <div class="overlay-panel overlay-right">
+                        <h1>Welcome back to Splotshot!</h1>
+                        <p>Log in to continue watching and uploading your favorite videos.</p>
+                        <button class="ghost" (click)="signUpButtonClick()">Sign Up</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
