@@ -1,1 +1,9 @@
-<app-login></app-login>
+<div *ngIf="dataBag.isLoggedIn()">
+    <app-header></app-header>
+    <app-sidebar></app-sidebar>
+</div>
+
+<router-outlet></router-outlet>
+
+<!-- <app-login></app-login> -->
+<!-- <app-register></app-register> -->

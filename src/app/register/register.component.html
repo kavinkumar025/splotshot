@@ -1,0 +1,27 @@
+<div class="d-flex justify-content-center align-items-center vh-100">
+  <div class="register-container">
+    <div class="register-box">
+      <h2>Register</h2>
+      <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+        <div class="input-group">
+          <input type="text" formControlName="name" placeholder="Full Name" required>
+          <input type="email" formControlName="email" placeholder="Email Address" required>
+          <input type="tel" formControlName="phone" placeholder="Phone Number" required>
+          <input type="date" formControlName="dob" placeholder="Date of Birth" required>
+          <input type="password" formControlName="password" placeholder="Password" required>
+        </div>
+        <button type="submit" class="register-btn" [disabled]="registerForm.invalid">
+          Register
+        </button>
+        <!-- <div class="separator">OR</div>
+        <button type="button" class="google-btn">
+          Sign in with Google
+        </button> -->
+
+        <p class="login-text">Already have an account?
+          <a (click)="navigateToLogin()" style="cursor: pointer; text-decoration: underline;">Login</a>
+        </p>
+      </form>
+    </div>
+  </div>
+</div>

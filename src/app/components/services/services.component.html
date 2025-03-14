@@ -1,0 +1,33 @@
+<div class="faq-container mt-5">
+    <!-- More Reasons to Join -->
+    <h2>More Reasons to Join SplotShot</h2>
+    <div class="reasons-container">
+      <div class="reason-box">
+        <h3>🎬 Regular Users</h3>
+        <p>Enjoy short films without ads or interruptions.</p>
+      </div>
+      <div class="reason-box">
+        <h3>🎥 Creator Users</h3>
+        <p>Upload short films for ₹150/month. Our associate directors will review them.</p>
+      </div>
+      <div class="reason-box">
+        <h3>🌟 Celebrity Users</h3>
+        <p>Watch, review, and contact creators for free.</p>
+      </div>
+    </div>
+  
+    <!-- FAQ Section -->
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-items">
+      <div *ngFor="let faq of faqs; let i = index" class="faq-item" [class.active]="activeIndex === i">
+        <button class="faq-question" (click)="toggleFAQ(i)">
+          <span>{{ faq.question }}</span>
+          <span class="icon">{{ activeIndex === i ? '✖' : '+' }}</span>
+        </button>
+        <div class="faq-answer" *ngIf="activeIndex === i">
+          <p>{{ faq.answer }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  

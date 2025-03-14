@@ -1,50 +1,34 @@
-<div class="container mt-5" id="container">
-    <div class="row justify-content-center align-items-center">
-        <div class="col-lg-6 col-md-8 col-sm-10">
-            <div class="form-container sign-up-container">
-                <form>
-                    <div class="social-container">
-                        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-                        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
-                    <span>or use your email for registration</span>
-                    <input class="form-control" type="text" placeholder="Name" />
-                    <input class="form-control" type="email" placeholder="Email" />
-                    <input class="form-control" type="email" placeholder="Mobile Number" />
-                    <input class="form-control" type="password" placeholder="Password" />
-                    <button class="btn btn-danger">Sign Up</button>
-                </form>
+<div class="login-container">
+    <div class="login-box">
+        <h2>Welcome Back</h2>
+        <p>Login to continue</p>
+        <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+            <div class="input-group">
+                <label>Email</label>
+                <input type="email" formControlName="email" placeholder="Enter your email">
+                <span *ngIf="email.invalid && email.touched" class="error">Invalid email</span>
             </div>
-            <div class="form-container sign-in-container">
-                <form>
-                    <h1>Sign in</h1>
-                    <div class="social-container">
-                        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-                        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
-                    <span>or use your account</span>
-                    <input class="form-control" type="email" placeholder="Email" />
-                    <input class="form-control" type="password" placeholder="Password" />
-                    <a href="#">Forgot your password?</a>
-                    <button class="btn btn-danger">Sign In</button>
-                </form>
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" formControlName="password" placeholder="Enter your password">
+                <span *ngIf="password.invalid && password.touched" class="error">Password must be at least 6
+                    characters</span>
             </div>
-            <div class="overlay-container">
-                <div class="overlay">
-                    <div class="overlay-panel overlay-left">
-                        <h1>Welcome to Splotshot!</h1>
-                        <p>Sign up and start sharing your videos with the world.</p>
-                        <button class="ghost" (click)="signInButtonClick()">Sign In</button>
-                    </div>
-                    <div class="overlay-panel overlay-right">
-                        <h1>Welcome back to Splotshot!</h1>
-                        <p>Log in to continue watching and uploading your favorite videos.</p>
-                        <button class="ghost" (click)="signUpButtonClick()">Sign Up</button>
-                    </div>
-                </div>
-            </div>
+            <button type="submit" class="login-btn">Login</button>
+        </form>
+        <div class="separator">
+            <span>OR</span>
         </div>
+        <button (click)="loginWithGoogle()" class="google-btn">
+            <img src="https://img.icons8.com/color/48/google-logo.png" alt="Google Logo">
+            Sign in with Google
+        </button>
+        <p class="signup-text">Don't have an account?
+            <a (click)="navigateToRegister()" style="cursor: pointer; text-decoration: underline;">Sign Up</a>
+        </p>
+
+
+
+
     </div>
 </div>

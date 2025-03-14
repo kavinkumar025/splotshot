@@ -1,0 +1,38 @@
+.banner {
+    background-image: url('https://via.placeholder.com/1500x800/FF4B5C/ffffff?text=SplotShot');
+    background-size: cover;
+    background-position: center;
+    height: 60vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.banner-content h2 {
+    font-size: 3rem;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 10px;
+}
+
+.banner-content p {
+    font-size: 1.5rem;
+    color: white;
+    margin-bottom: 20px;
+}
+
+.explore-btn {
+    padding: 15px 30px;
+    background-color: white;
+    color: #ff4b5c;
+    font-size: 18px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.explore-btn:hover {
+    background-color: #f1f1f1;
+}

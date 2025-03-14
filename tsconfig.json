@@ -3,31 +3,32 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+  "esModuleInterop": true,
     "outDir": "./dist/out-tsc",
-    "strict": true,
+    "strict": false, // 🔹 Reduce strictness to speed up type checking
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "skipLibCheck": true,
+    "skipLibCheck": true, // ✅ Skips library type checking for speed
     "isolatedModules": true,
-    "esModuleInterop": true,
-    "sourceMap": true,
+    "sourceMap": false, // ❌ Disable if not debugging
     "declaration": false,
     "experimentalDecorators": true,
-    "moduleResolution": "bundler",
+    "moduleResolution": "node", // ✅ Faster than "bundler"
     "importHelpers": true,
-    "target": "ES2022",
-    "module": "ES2022",
+    "target": "ES2020", // ✅ Reducing target may improve build speed
+    "module": "ESNext", // ✅ Allows tree shaking for better performance
     "lib": [
-      "ES2022",
+      "ES2020",
       "dom"
     ]
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
-    "strictInjectionParameters": true,
-    "strictInputAccessModifiers": true,
-    "strictTemplates": true
-  }
+    "strictInjectionParameters": false, // 🔹 Reduce strictness
+    "strictInputAccessModifiers": false, // 🔹 Reduce strictness
+    "strictTemplates": false // 🔹 Reduce template checking overhead
+  },
 }

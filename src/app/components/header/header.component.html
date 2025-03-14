@@ -1,0 +1,47 @@
+<header class="header">
+  <div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center">
+      <!-- Logo -->
+      <div class="logo">Your Logo</div>
+
+      <!-- Desktop Navigation (hidden on tablets & mobile) -->
+      <nav class="nav d-none d-lg-block">
+        <ul class="d-flex">
+          <li><a (click)="navigateToHomePage()">Home</a></li>
+          <!-- <li><a href="#">About</a></li> -->
+          <li><a (click)="navigateToServicesPage()">Services</a></li>
+          <li><a (click)="navigateToContactUSPage()">Contact</a></li>
+          <li><a (click)="navigateToUploadedVideoPage()">Upload Video</a></li>
+        </ul>
+      </nav>
+
+      <!-- Account Section (Desktop) -->
+      <div class="account-section d-none d-lg-flex align-items-center">
+        <span class="username">Welcome, {{ userName }}</span>
+        <button class="logout-btn" (click)="logout()">Logout</button>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button class="menu-toggle d-lg-none" (click)="toggleMenu()">
+        <div class="bar" [class.open]="menuOpen"></div>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Navigation -->
+  <nav class="mobile-nav" [class.show]="menuOpen">
+    <ul>
+      <li><a (click)="navigateToHomePage()">Home</a></li>
+      <!-- <li><a>About</a></li> -->
+      <li><a (click)="navigateToServicesPage()">Services</a></li>
+      <li><a (click)="navigateToContactUSPage()">Contact</a></li>
+      <li><a (click)="navigateToUploadedVideoPage()">Upload Video</a></li>
+    </ul>
+
+    <!-- User Account Section (Mobile) -->
+    <div class="mobile-account">
+      <span class="username">Welcome, {{ userName }}</span>
+      <button class="logout-btn" (click)="logout()">Logout</button>
+    </div>
+  </nav>
+</header>

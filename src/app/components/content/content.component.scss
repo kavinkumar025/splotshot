@@ -1,0 +1,22 @@
+.content {
+    padding: 20px;
+    background-color: white;
+}
+
+.content h3 {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #ff4b5c;
+}
+
+.movie-list {
+    display: flex;
+    gap: 15px;
+}
+
+.movie-card {
+    background: #ff4b5c;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+}

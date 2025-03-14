@@ -1,0 +1,65 @@
+<div class="upload-container">
+    <h2>🎬 Upload Your Video</h2>
+  
+    <form [formGroup]="videoForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label>🎥 Title <span class="required">*</span></label>
+        <input type="text" formControlName="title" class="form-control" placeholder="Enter video title" />
+      </div>
+  
+      <div class="form-group">
+        <label>📜 Description <span class="required">*</span></label>
+        <textarea formControlName="description" class="form-control" placeholder="Write about the video"></textarea>
+      </div>
+  
+      <div class="form-group">
+        <label>📂 Upload Video <span class="required">*</span></label>
+        <input 
+        type="file" 
+        (change)="onFileSelected($event)" 
+        accept="video/*" 
+        class="file-input">
+      <p *ngIf="fileError" class="error-text">{{ fileError }}</p>
+      
+      </div>
+  
+      <!-- Video Preview -->
+      <video *ngIf="videoPreview" [src]="videoPreview" controls class="video-preview"></video>
+  
+      <div class="form-group">
+        <label>
+          <input type="checkbox" formControlName="ageConfirmation" />
+          <span>I confirm this is an 18+ video.</span>
+        </label>
+      </div>
+  
+      <!-- Departments FormArray -->
+      <div formArrayName="departments">
+        <div *ngFor="let department of departments.controls; let i = index" [formGroupName]="i" class="department-group">
+          <input type="text" formControlName="name" placeholder="Department Name (e.g. Camera)" class="input-field" />
+          
+          <input type="text" formControlName="role" placeholder="Person Name" class="input-field" />
+  
+          <input type="text" formControlName="phone" placeholder="Phone Number (10 digits)" class="input-field" required />
+  
+          <input type="text" formControlName="instagram" placeholder="Instagram (Optional)" class="input-field" />
+  
+          <select formControlName="zonor" class="dropdown">
+            <option value="" disabled selected>Select Category</option>
+            <option *ngFor="let zone of zonorList" [value]="zone">{{ zone }}</option>
+          </select>
+  
+          <button type="button" (click)="removeDepartment(i)" class="remove-btn">❌ Remove</button>
+        </div>
+      </div>
+  
+      <button type="button" (click)="addDepartment()" class="add-btn">➕ Add More</button>
+  
+      <!-- Submit Button -->
+      <button type="submit" [disabled]="videoForm.invalid" class="submit-btn">🚀 Upload</button>
+  
+      <!-- Loader -->
+      <div *ngIf="isLoading" class="loader">⏳ Uploading...</div>
+    </form>
+  </div>
+  
