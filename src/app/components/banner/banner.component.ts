@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { DataBagService } from '../data-bag.service';
 
 @Component({
   selector: 'app-banner',
@@ -8,5 +9,9 @@ import { Component } from '@angular/core';
   styleUrl: './banner.component.scss'
 })
 export class BannerComponent {
+
+  constructor(public dataBag: DataBagService){
+    
+  }
 
 }

@@ -13,13 +13,8 @@
         <button type="submit" class="register-btn" [disabled]="registerForm.invalid">
           Register
         </button>
-        <!-- <div class="separator">OR</div>
-        <button type="button" class="google-btn">
-          Sign in with Google
-        </button> -->
-
         <p class="login-text">Already have an account?
-          <a (click)="navigateToLogin()" style="cursor: pointer; text-decoration: underline;">Login</a>
+          <a (click)="dataBag.navigateTo('/login')" style="cursor: pointer; text-decoration: underline;">Login</a>
         </p>
       </form>
     </div>

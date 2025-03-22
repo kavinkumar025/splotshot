@@ -8,9 +8,6 @@ import { ContactUsComponent } from './components/contact-us/contact-us.component
 import { ServicesComponent } from './components/services/services.component';
 import { UploadVideoComponent } from './components/upload-video/upload-video.component';
 
-//  const routes: Routes = [];
-
-
 export const routes: Routes = [
     { path: '', component: BannerComponent },
     { path: 'login', component: LoginComponent },
@@ -18,8 +15,8 @@ export const routes: Routes = [
     { path: 'home', component: HomeComponent },
     { path: 'contact', component: ContactUsComponent },
     { path: 'services', component: ServicesComponent },
-    { path: 'upload-video', component: UploadVideoComponent }
-
+    { path: 'upload-video', component: UploadVideoComponent },
+    { path: '**', redirectTo: 'login', pathMatch: 'full' }
 ];
 
 @NgModule({

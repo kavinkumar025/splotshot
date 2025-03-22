@@ -13,10 +13,10 @@
 </div>
 
 <!-- Fullscreen Video Modal -->
+<!-- Fullscreen Video Modal -->
 <div class="video-modal" *ngIf="isVideoOpen" (click)="closeVideo()">
   <div class="video-content" (click)="stopClick($event)">
     <span class="close-btn" (click)="closeVideo()">&times;</span>
-    <iframe [src]="videoUrl" width="800" height="450" frameborder="0" allowfullscreen>
-    </iframe>
+    <div id="youtubePlayer"></div> <!-- YouTube Player will be loaded here -->
   </div>
 </div>

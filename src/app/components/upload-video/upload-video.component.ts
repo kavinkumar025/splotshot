@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
@@ -11,76 +11,25 @@ import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Va
 })
 export class UploadVideoComponent {
 
-
+    @ViewChild('videoElement') videoElement!: ElementRef<HTMLVideoElement>;
   
     videoForm: FormGroup;
-    isLoading: boolean = false;
-    videoPreview: string | null = null;
-    fileError = '';
+    zonorList: string[] = ['Action', 'Comedy', 'Drama', 'Sci-Fi'];
+    isDragging = false;
     selectedFile: File | null = null;
-    isDragging: boolean = false;
-  
-    zonorList = ['Action', 'Comedy', 'Crime', 'Thriller', 'Drama', 'Horror', 'Sci-Fi', 'Adventure', 'Fantasy'];
+    videoPreview: string | null = null;
+    fileError: string = '';
+    isLoading = false;
+    uploadProgress = 0;
   
     constructor(private fb: FormBuilder) {
       this.videoForm = this.fb.group({
         title: ['', Validators.required],
         description: ['', Validators.required],
+        zonor: ['', Validators.required],
         ageConfirmation: [false, Validators.requiredTrue],
-        videoFile: [null, Validators.required],
-        departments: this.fb.array([this.createDepartmentField()])
       });
     }
-  
-    get departments(): FormArray {
-      return this.videoForm.get('departments') as FormArray;
-    }
-  
-    createDepartmentField(): FormGroup {
-      return this.fb.group({
-        name: ['', Validators.required],
-        role: ['', Validators.required],
-        phone: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
-        instagram: [''],
-        zonor: ['', Validators.required]
-      });
-    }
-  
-    addDepartment() {
-      this.departments.push(this.createDepartmentField());
-    }
-  
-    removeDepartment(index: number) {
-      this.departments.removeAt(index);
-    }
-  
-    onFileSelected(event: any) {
-      const file: File = event.target.files[0];
-      if (file) {
-        const allowedFormats = ['video/mp4', 'video/mov', 'video/avi', 'video/wmv', 'video/mkv', 'video/flv', 'video/webm'];
-        
-        if (!allowedFormats.includes(file.type)) {
-          this.fileError = "Only video files (MP4, MOV, AVI, WMV, MKV, FLV, WEBM) are allowed!";
-          event.target.value = ''; // Clear the input field
-          return;
-        }
-        
-        this.fileError = '';
-        this.selectedFile = file;
-    
-        // Generate preview only for supported formats (excluding MKV)
-        if (file.type !== 'video/x-matroska') {
-          const reader = new FileReader();
-          reader.onload = () => {
-            this.videoPreview = reader.result as string;
-          };
-          reader.readAsDataURL(file);
-        } else {
-          this.videoPreview = null; // No preview for MKV
-        }
-      }
-    }
-    
   
     onDragOver(event: DragEvent) {
       event.preventDefault();
@@ -95,50 +44,72 @@ export class UploadVideoComponent {
     onDrop(event: DragEvent) {
       event.preventDefault();
       this.isDragging = false;
-  
-      const file = event.dataTransfer?.files[0];
-      if (file) {
-        this.processFile(file);
+      if (event.dataTransfer?.files.length) {
+        this.handleFile(event.dataTransfer.files[0]);
       }
     }
   
-    processFile(file: File) {
-      const allowedFormats = ['video/mp4', 'video/mov', 'video/avi', 'video/wmv', 'video/mkv', 'video/flv', 'video/webm'];
+    onFileSelected(event: any) {
+      const file = event.target.files[0];
+      this.handleFile(file);
+    }
   
-      if (!allowedFormats.includes(file.type)) {
-        this.fileError = "Only video files (MP4, MOV, AVI, WMV, MKV, FLV, WEBM) are allowed!";
+    handleFile(file: File) {
+      if (!file.type.startsWith('video/')) {
+        this.fileError = 'Only video files are allowed.';
         return;
       }
   
-      this.fileError = '';
       this.selectedFile = file;
+      this.fileError = '';
+      this.uploadProgress = 1;
   
-      // Generate a preview
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.videoPreview = reader.result as string;
-      };
-      reader.readAsDataURL(file);
+      // ✅ Fix: Use URL.createObjectURL for large files
+      this.videoPreview = URL.createObjectURL(file);
+      this.simulateUpload();
+    }
+  
+    simulateUpload() {
+      this.isLoading = true;
+      let progress = 1;
+      const interval = setInterval(() => {
+        if (progress >= 100) {
+          clearInterval(interval);
+          this.isLoading = false;
+          
+          // ✅ Fix: Auto-play video after loading completes
+          setTimeout(() => {
+            if (this.videoElement) {
+              this.videoElement.nativeElement.load();
+              this.videoElement.nativeElement.play();
+            }
+          }, 500);
+        }
+        this.uploadProgress = progress++;
+      }, 50);
     }
   
     onSubmit() {
-      if (this.videoForm.invalid) {
-        alert('Please fill in all required fields.');
-        return;
-      }
-  
-      this.isLoading = true;
-  
-      setTimeout(() => {
-        this.isLoading = false;
-        alert('Video uploaded successfully!');
-        this.videoForm.reset();
-        this.videoPreview = null;
-      }, 3000);
+      console.log('Form Data:', this.videoForm.value);
     }
+
+    get departments(): FormArray {
+      return this.videoForm.get('departments') as FormArray;
+    }
+    
+    addDepartment(): void {
+      this.departments.push(this.fb.group({
+        name: ['', Validators.required],
+        role: ['', Validators.required],
+        phone: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
+        instagram: [''],
+        zonor: ['', Validators.required]
+      }));
+    }
+    
+    removeDepartment(index: number): void {
+      this.departments.removeAt(index);
+    }
+    
+  }
   
-  
-
-
-
-}

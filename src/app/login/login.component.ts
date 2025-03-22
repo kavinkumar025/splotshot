@@ -15,11 +15,13 @@ import { DataBagService } from '../components/data-bag.service';
 
 export class LoginComponent {
 
+  public loginForm: FormGroup;
 
-
-  loginForm: FormGroup;
-
-  constructor(private fb: FormBuilder, public router: Router, @Inject(PLATFORM_ID) private platformId: any,public dataBag : DataBagService) {
+  constructor(
+    private fb: FormBuilder, 
+    public router: Router, @Inject(PLATFORM_ID) private platformId: any,
+    public dataBag : DataBagService
+  ) {
     this.loginForm = this.fb.group({
       email: ["", [Validators.required, Validators.email]],
       password: ["", [Validators.required, Validators.minLength(6)]],
@@ -34,13 +36,10 @@ export class LoginComponent {
     return this.loginForm.get("password")!;
   }
 
-  onLogin() {
-   
+  public onLogin() {
     if (isPlatformBrowser(this.platformId)) {
       localStorage.setItem("loggedIn", "true");
-     
     }
-    
     if (this.loginForm.valid) {
       console.log("Login Successful", this.loginForm.value);
       // Add login logic (API call)
@@ -49,13 +48,9 @@ export class LoginComponent {
     this.router.navigate(['/home']);
   }
 
-  loginWithGoogle() {
+  public loginWithGoogle() {
     console.log("Google login clicked");
     // Add Google Authentication logic
-  }
-
-  navigateToRegister() {
-    this.router.navigate(['/register']);
   }
 }
 

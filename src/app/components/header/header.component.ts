@@ -13,15 +13,18 @@ export class HeaderComponent {
   menuOpen = false;
   userName = 'John Doe'; // Replace with dynamic user data
 
-  constructor(public router: Router, public dataBag : DataBagService){
-    
+  constructor(
+    public router: Router, 
+    public dataBag: DataBagService
+  ) {
+
   }
 
-  toggleMenu() {
+  public toggleMenu() {
     this.menuOpen = !this.menuOpen;
   }
 
-  logout() {
+  public logout() {
     console.log('Logging out...');
     // Add your logout logic here
     this.router.navigate(['/login']);
@@ -29,23 +32,19 @@ export class HeaderComponent {
     this.dataBag.isUserLoggedIn = false;
   }
 
-  navigateToContactUSPage(){
-    
+  navigateToContactUSPage() {
     this.router.navigate(['/contact']);
   }
 
-  navigateToServicesPage(){
-    
+  navigateToServicesPage() {
     this.router.navigate(['/services']);
   }
 
-  navigateToHomePage(){
-    
+  navigateToHomePage() {
     this.router.navigate(['/home']);
   }
 
-  navigateToUploadedVideoPage(){
-    
+  navigateToUploadedVideoPage() {
     this.router.navigate(['/upload-video']);
   }
 

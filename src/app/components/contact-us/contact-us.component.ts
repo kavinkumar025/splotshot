@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DataBagService } from '../data-bag.service';
 
 @Component({
   selector: 'app-contact-us',
@@ -13,16 +14,13 @@ export class ContactUsComponent {
   contactForm: FormGroup;
   showModal: boolean = false;
 
-  topics: string[] = [
-    'Content Grievances in India',
-    'Reset password',
-    'Update email',
-    'Get help signing in',
-    'Update payment method',
-    'Request TV shows or movies'
-  ];
+  
 
-  constructor(private fb: FormBuilder) {
+
+  constructor(
+    private fb: FormBuilder,
+    public dataBag : DataBagService
+  ) {
     this.contactForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],

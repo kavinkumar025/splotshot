@@ -7,14 +7,16 @@
             <label>Name <span class="required">*</span></label>
             <input type="text" formControlName="name" class="form-control"
                 [ngClass]="{'error': contactForm.get('name')?.invalid && contactForm.get('name')?.touched}" />
-            <small *ngIf="contactForm.get('name')?.invalid && contactForm.get('name')?.touched">Name is required.</small>
+            <small *ngIf="contactForm.get('name')?.invalid && contactForm.get('name')?.touched">Name is
+                required.</small>
         </div>
 
         <div class="form-group">
             <label>Email <span class="required">*</span></label>
             <input type="email" formControlName="email" class="form-control"
                 [ngClass]="{'error': contactForm.get('email')?.invalid && contactForm.get('email')?.touched}" />
-            <small *ngIf="contactForm.get('email')?.invalid && contactForm.get('email')?.touched">Enter a valid email.</small>
+            <small *ngIf="contactForm.get('email')?.invalid && contactForm.get('email')?.touched">Enter a valid
+                email.</small>
         </div>
 
         <div class="form-group">
@@ -22,23 +24,23 @@
             <select formControlName="topic" class="form-control"
                 [ngClass]="{'error': contactForm.get('topic')?.invalid && contactForm.get('topic')?.touched}">
                 <option value="">Select a topic</option>
-                <option *ngFor="let topic of topics" [value]="topic">{{ topic }}</option>
+                <option *ngFor="let topic of dataBag.contachUsTopics" [value]="topic">{{ topic }}</option>
             </select>
-            <small *ngIf="contactForm.get('topic')?.invalid && contactForm.get('topic')?.touched">Please select a topic.</small>
+            <small *ngIf="contactForm.get('topic')?.invalid && contactForm.get('topic')?.touched">Please select a
+                topic.</small>
         </div>
 
         <div class="form-group">
             <label>Describe your issue <span class="required">*</span></label>
             <textarea formControlName="message" class="form-control" rows="4"
                 [ngClass]="{'error': contactForm.get('message')?.invalid && contactForm.get('message')?.touched}"></textarea>
-            <small *ngIf="contactForm.get('message')?.invalid && contactForm.get('message')?.touched">Message must be at least 10 characters.</small>
+            <small *ngIf="contactForm.get('message')?.invalid && contactForm.get('message')?.touched">Message must be at
+                least 10 characters.</small>
         </div>
-
         <button type="submit" [disabled]="contactForm.invalid" class="submit-btn">Submit</button>
         <button class="call-us-btn" (click)="openModal()">Call Us</button>
     </form>
 </div>
-
 <!-- Call Us Button -->
 
 

@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ReactiveFormsModule, FormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { DataBagService } from '../components/data-bag.service';
 
 @Component({
   selector: 'app-register',
@@ -11,9 +12,13 @@ import { Router } from '@angular/router';
   styleUrl: './register.component.scss'
 })
 export class RegisterComponent {
-  registerForm: FormGroup;
+  public registerForm: FormGroup;
 
-  constructor(private fb: FormBuilder,public router: Router) {
+  constructor(
+    private fb: FormBuilder, 
+    public router: Router,
+    public dataBag: DataBagService
+  ) {
     this.registerForm = this.fb.group({
       name: ["", [Validators.required, Validators.minLength(3)]],
       email: ["", [Validators.required, Validators.email]],
@@ -43,18 +48,9 @@ export class RegisterComponent {
     return this.registerForm.get("password")!;
   }
 
-  onRegister() {
+  public onRegister() {
     if (this.registerForm.valid) {
       console.log("Registration Successful", this.registerForm.value);
     }
-  }
-
-  onGoogleSignUp() {
-    console.log("Google Sign-Up Clicked!");
-    // Implement Google OAuth or Firebase authentication here
-  }
-
-  navigateToLogin(){
-    this.router.navigate(['/login']);
   }
 }
