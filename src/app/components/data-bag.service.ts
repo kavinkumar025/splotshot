@@ -11,6 +11,7 @@ export class DataBagService {
   ) { }
 
   public isUserLoggedIn = false;
+  public isDisplayHeader = true;
   public contachUsTopics: string[] = [
     'Content Grievances in India',
     'Reset password',
@@ -45,13 +46,6 @@ export class DataBagService {
     'Marketplace buying/selling issues'
   ];
 
-
-
-
-
-
-
-
   public isLoggedIn(): boolean {
     return this.isUserLoggedIn || localStorage.getItem('loggedIn') === 'true';
   }
@@ -59,6 +53,4 @@ export class DataBagService {
   public navigateTo(path: string): void {
     this.router.navigate([path]);
   }
-
-  
 }

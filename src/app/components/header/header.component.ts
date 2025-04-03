@@ -1,11 +1,12 @@
 import { Component, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataBagService } from '../data-bag.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })

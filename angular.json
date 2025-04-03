@@ -16,6 +16,8 @@
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:application",
+          "outputPath": "docs",
+          "baseHref": "/splotshot/",
           "options": {
             "outputPath": "docs",
             "index": "src/index.html",
