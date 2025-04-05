@@ -1,4 +1,5 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, inject } from '@angular/core';
+import { DataBagService } from '../data-bag.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -9,10 +10,12 @@ import { Component, HostListener } from '@angular/core';
 })
 export class SidebarComponent {
   isExpanded = true; // Default expanded
-
+  public dataBag = inject(DataBagService);
   toggleSidebar() {
     this.isExpanded = !this.isExpanded;
   }
+
+
 
   // Close sidebar in mobile view
   @HostListener('window:resize', ['$event'])

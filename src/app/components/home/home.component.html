@@ -1,17 +1,21 @@
 <div class="container">
+  <!-- Search -->
   <input type="text" class="search-bar" placeholder="Search videos..." (input)="filterVideos($event)" />
+
+  <!-- Categories -->
   <div class="categories">
     <button *ngFor="let category of categories" (click)="selectCategory(category)"
       [class.active]="selectedCategory === category">
       {{ category }}
     </button>
   </div>
-  <!-- Video Grid -->
-  <div class="video-grid">
+
+  <!-- Grid View -->
+  <div class="video-grid" *ngIf="!isVideoOpen">
     <div class="video-card" *ngFor="let video of filteredVideos" (click)="openVideo(video)">
-      <img *ngIf="video.thumbnailUrl; else videoFrame" [src]="video.thumbnailUrl" alt="Video Thumbnail" />
-      <ng-template #videoFrame>
-        <video class="video-preview" preload="metadata">
+      <img *ngIf="video.thumbnailUrl; else noThumb" [src]="video.thumbnailUrl" alt="thumbnail" />
+      <ng-template #noThumb>
+        <video class="video-preview" preload="metadata" muted>
           <source [src]="video.url + '?tr=w-400,h-640'" type="video/mp4" />
         </video>
       </ng-template>
@@ -19,13 +23,36 @@
       <p>{{ video.description }}</p>
     </div>
   </div>
-</div>
-<!-- Fullscreen Video Modal -->
-<div class="fullscreen-modal" *ngIf="isVideoOpen" (click)="closeVideo()">
-  <div class="fullscreen-content" (click)="stopClick($event)">
-    <span class="close-btn" (click)="closeVideo()">&times;</span>
-    <video controls autoplay class="fullscreen-video">
-      <source [src]="selectedVideo?.url" type="video/mp4" />
-    </video>
+
+  <!-- Video Detail View -->
+  <div class="fullscreen-modal" *ngIf="isVideoOpen">
+    <div class="fullscreen-content">
+      <button class="close-btn" (click)="closeVideo()">×</button>
+
+      <video controls autoplay class="fullscreen-video">
+        <source [src]="selectedVideo?.url" type="video/mp4" />
+      </video>
+
+      <h2>{{ selectedVideo?.title }}</h2>
+      <p>{{ selectedVideo?.description }}</p>
+
+      <!-- Likes, Comments, Share -->
+      <div class="video-actions">
+        <button (click)="likeVideo(selectedVideo.id)">👍 Like ({{ getLikes(selectedVideo.id) }})</button>
+        <button (click)="shareVideo(selectedVideo)">🔗 Share</button>
+        <button (click)="castScreen()">📺 Cast</button>
+      </div>
+      
+
+      <!-- Comments -->
+      <div class="comments-section">
+        <h4>Comments</h4>
+        <input #commentBox type="text" placeholder="Write a comment..." />
+        <button (click)="addComment(selectedVideo.id, commentBox.value); commentBox.value=''">Post</button>
+        <ul>
+          <li *ngFor="let comment of getComments(selectedVideo.id)">{{ comment }}</li>
+        </ul>
+      </div>
+    </div>
   </div>
 </div>
