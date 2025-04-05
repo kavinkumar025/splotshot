@@ -1,34 +1,38 @@
-<div class="upload-container">
+<div class="upload-container mb-5">
   <h2>Upload Video</h2>
 
   <form [formGroup]="videoForm" (ngSubmit)="onSubmit()">
     <!-- Title -->
     <div class="form-group">
-      <label>Title:</label>
+      <label>Title*</label>
       <input type="text" formControlName="title" placeholder="Enter video title" />
-      <p class="error" *ngIf="videoForm.get('title')?.invalid && videoForm.get('title')?.touched">
-        Title is required.
-      </p>
+      <p class="error" *ngIf="videoForm.get('title')?.touched && videoForm.get('title')?.invalid">Title is required.</p>
     </div>
 
     <!-- Description -->
     <div class="form-group">
-      <label>Description:</label>
+      <label>Description*</label>
       <textarea formControlName="description" placeholder="Enter video description"></textarea>
-      <p class="error" *ngIf="videoForm.get('description')?.invalid && videoForm.get('description')?.touched">
-        Description is required.
-      </p>
+      <p class="error" *ngIf="videoForm.get('description')?.touched && videoForm.get('description')?.invalid">
+        Description is required.</p>
     </div>
 
     <!-- Genre -->
     <div class="form-group">
-      <label>Genre (Zonor):</label>
+      <label>Genre (Zonor)*</label>
       <select formControlName="zonor">
         <option *ngFor="let genre of zonorList" [value]="genre">{{ genre }}</option>
       </select>
-      <p class="error" *ngIf="videoForm.get('zonor')?.invalid && videoForm.get('zonor')?.touched">
-        Please select a genre.
+      <p class="error" *ngIf="videoForm.get('zonor')?.touched && videoForm.get('zonor')?.invalid">Please select a genre.
       </p>
+    </div>
+
+    <!-- Phone -->
+    <div class="form-group">
+      <label>Phone Number*</label>
+      <input type="text" formControlName="phone" placeholder="Enter phone number" />
+      <p class="error" *ngIf="videoForm.get('phone')?.touched && videoForm.get('phone')?.invalid">Valid phone number is
+        required.</p>
     </div>
 
     <!-- Age Confirmation -->
@@ -37,37 +41,50 @@
         <input type="checkbox" formControlName="ageConfirmation" />
         Confirm this is 18+ content
       </label>
-      <p class="error" *ngIf="videoForm.get('ageConfirmation')?.invalid && videoForm.get('ageConfirmation')?.touched">
-        You must confirm this is 18+ content.
-      </p>
+      <p class="error" *ngIf="videoForm.get('ageConfirmation')?.touched && videoForm.get('ageConfirmation')?.invalid">
+        You must confirm.</p>
     </div>
 
-    <!-- Drag & Drop Upload -->
-    <div
-      class="drop-area"
-      (dragover)="onDragOver($event)"
-      (dragleave)="onDragLeave($event)"
-      (drop)="onDrop($event)"
-      [class.dragging]="isDragging"
-    >
-      <p *ngIf="!selectedFile">Drag & Drop your video file here or click to upload</p>
+    <!-- File Upload -->
+    <div class="drop-area" (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event)"
+      [class.dragging]="isDragging">
+      <p *ngIf="!selectedFile">Drag & Drop your video here or click to upload</p>
       <input type="file" (change)="onFileSelected($event)" accept="video/*" />
     </div>
     <p class="error" *ngIf="fileError">{{ fileError }}</p>
 
-    <!-- Progress Bar -->
+    <!-- Upload Progress -->
     <div *ngIf="isLoading" class="progress-bar">
       <div class="progress" [style.width.%]="uploadProgress">{{ uploadProgress }}%</div>
     </div>
 
-    <!-- Video Preview -->
+    <!-- Video & Thumbnail Preview -->
     <div *ngIf="videoPreview" class="video-preview">
       <video #videoElement controls [src]="videoPreview"></video>
+      <div *ngIf="thumbnail">
+        <img [src]="thumbnail" alt="Thumbnail" />
+      </div>
     </div>
 
-    <!-- Submit Button -->
-    <div class="button-group">
-      <button type="submit" [disabled]="videoForm.invalid || isLoading">Upload</button>
+    <!-- Contributors -->
+    <div class="form-group mt-4">
+      <h3>Contributors</h3>
+      <div formArrayName="contributors">
+        <div *ngFor="let group of contributors.controls; let i = index" [formGroupName]="i" class="contributor-group">
+          <input formControlName="name" placeholder="Name*" />
+          <input formControlName="phone" placeholder="Phone*" />
+          <input formControlName="email" placeholder="Email" />
+          <input formControlName="instagram" placeholder="Instagram" />
+          <select formControlName="role">
+            <option *ngFor="let role of roles" [value]="role">{{ role }}</option>
+          </select>
+          <button type="button" class="remove-btn" (click)="removeContributor(i)">Remove</button>
+        </div>
+      </div>
+      <button type="button" class="add-btn" (click)="addContributor()">Add Contributor</button>
     </div>
+
+    <!-- Submit -->
+    <button type="submit" [disabled]="videoForm.invalid || isLoading">Upload</button>
   </form>
 </div>

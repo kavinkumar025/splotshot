@@ -1,5 +1,5 @@
-import { Component, Inject, PLATFORM_ID, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from "@angular/forms";
+import { Component, inject, Inject, PLATFORM_ID, ViewEncapsulation } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule, AbstractControl, ValidationErrors } from "@angular/forms";
 import { CommonModule, isPlatformBrowser } from "@angular/common";
 import { Router } from '@angular/router';
 import { DataBagService } from '../components/data-bag.service';
@@ -16,43 +16,61 @@ import { DataBagService } from '../components/data-bag.service';
 
 export class LoginComponent {
 
-  public loginForm: FormGroup;
+  public fb = inject(FormBuilder);
+  public router = inject(Router);
+  public dataBag = inject(DataBagService);
+  public showPassword = false;
 
-  constructor(
-    private fb: FormBuilder, 
-    public router: Router, @Inject(PLATFORM_ID) private platformId: any,
-    public dataBag : DataBagService
-  ) {
-    this.loginForm = this.fb.group({
-      email: ["", [Validators.required, Validators.email]],
-      password: ["", [Validators.required, Validators.minLength(6)]],
-    });
-  }
+  public loginForm: FormGroup = this.fb.group({
+    email: ['', [Validators.required, this.validEmailWithTLDValidator, this.noSpaceValidator]],
+    password: ['', [Validators.required, Validators.minLength(6), this.passwordPatternValidator]],
+  });
 
   get email() {
-    return this.loginForm.get("email")!;
+    return this.loginForm.get('email')!;
   }
 
   get password() {
-    return this.loginForm.get("password")!;
+    return this.loginForm.get('password')!;
   }
 
   public onLogin() {
-    if (isPlatformBrowser(this.platformId)) {
-      localStorage.setItem("loggedIn", "true");
-    }
     if (this.loginForm.valid) {
+      const trimmedEmail = this.email.value.trim();
+      this.loginForm.patchValue({ email: trimmedEmail });
       console.log("Login Successful", this.loginForm.value);
-      // Add login logic (API call)
+      // Simulate API success
+      localStorage.setItem("loggedIn", "true");
+      this.router.navigate(['/home']);
+    } else {
+      this.loginForm.markAllAsTouched();
     }
-    this.dataBag.isUserLoggedIn = true;
-    this.router.navigate(['/home']);
   }
 
   public loginWithGoogle() {
-    console.log("Google login clicked");
-    // Add Google Authentication logic
+    console.log('Google login clicked');
   }
+
+  public noSpaceValidator(control: any) {
+    const value = control.value || '';
+    return value.includes(' ') ? { hasSpace: true } : null;
+  }
+
+  public passwordPatternValidator(control: any) {
+    const value = control.value || '';
+    const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,}$/;
+    return pattern.test(value) ? null : { passwordStrength: true };
+  }
+
+  public validEmailWithTLDValidator(control: AbstractControl): ValidationErrors | null {
+    const email = control.value?.trim();
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+    if (email && !regex.test(email)) {
+      return { invalidEmailFormat: true };
+    }
+    return null;
+  }
+
 }
 
 

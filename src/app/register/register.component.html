@@ -1,22 +1,67 @@
-<div class="d-flex justify-content-center align-items-center vh-100">
-  <div class="register-container">
-    <div class="register-box">
-      <h2>Register</h2>
-      <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
-        <div class="input-group">
-          <input type="text" formControlName="name" placeholder="Full Name" required>
-          <input type="email" formControlName="email" placeholder="Email Address" required>
-          <input type="tel" formControlName="phone" placeholder="Phone Number" required>
-          <input type="date" formControlName="dob" placeholder="Date of Birth" required>
-          <input type="password" formControlName="password" placeholder="Password" required>
-        </div>
-        <button type="submit" class="register-btn" [disabled]="registerForm.invalid">
-          Register
-        </button>
-        <p class="login-text">Already have an account?
-          <a (click)="dataBag.navigateTo('/login')" style="cursor: pointer; text-decoration: underline;">Login</a>
-        </p>
-      </form>
+<div class="bg-colour">
+  <div class="d-flex justify-content-center align-items-center mt-2">
+    <div class="register-container">
+      <div class="register-box">
+        <h2>Register</h2>
+        <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+          <div class="input-group">
+            <input type="text" formControlName="name" placeholder="Full Name" />
+            <span class="error" *ngIf="name.touched && name.errors?.['required']">Full name is required</span>
+            <span class="error" *ngIf="name.touched && name.errors?.['minlength']">Min 3 characters required</span>
+            <input type="email" formControlName="email" placeholder="Email Address" />
+            <span class="error" *ngIf="email.touched && email.errors as errors">
+              <ng-container *ngIf="errors['required']; else emailInvalid">
+                Email is required
+              </ng-container>
+              <ng-template #emailInvalid>
+                <ng-container *ngIf="errors['email']; else emailHasSpace">
+                  Invalid email
+                </ng-container>
+              </ng-template>
+              <ng-template #emailHasSpace>
+                <ng-container *ngIf="errors['hasSpace']; else emailInvalidDomain">
+                  Email can't contain spaces
+                </ng-container>
+              </ng-template>
+              <ng-template #emailInvalidDomain>
+                <ng-container *ngIf="errors['invalidDomain']">
+                  Invalid domain
+                </ng-container>
+              </ng-template>
+            </span>
+            <input type="tel" formControlName="phone" placeholder="Phone Number" />
+            <span class="error" *ngIf="phone.touched && phone.errors?.['required']">Phone is required</span>
+            <span class="error" *ngIf="phone.touched && phone.errors?.['pattern']">Enter 10-digit number</span>
+            <input type="date" formControlName="dob" class="date-picker" placeholder="Date of Birth" />
+            <span class="error" *ngIf="dob.touched && dob.errors?.['required']">Date of Birth is required</span>
+            <input type="password" formControlName="password" placeholder="Password" />
+            <span class="error" *ngIf="password.touched && password.errors as errors">
+              <ng-container *ngIf="errors['required']; else pwMinLength">
+                Password is required
+              </ng-container>
+              <ng-template #pwMinLength>
+                <ng-container *ngIf="errors['minlength']; else pwStrength">
+                  Min 6 characters
+                </ng-container>
+              </ng-template>
+              <ng-template #pwStrength>
+                <ng-container *ngIf="errors['passwordStrength']">
+                  Must contain uppercase, lowercase, number & special char
+                </ng-container>
+              </ng-template>
+            </span>
+            <input type="password" formControlName="rePassword" placeholder="Re-enter Password" />
+            <span class="error" *ngIf="rePassword.touched && rePassword.errors?.['required']">Confirm your
+              password</span>
+            <span class="error" *ngIf="registerForm.errors?.['passwordMismatch']">Passwords do not match</span>
+          </div>
+          <button type="submit" class="register-btn" [disabled]="registerForm.invalid">Register</button>
+          <p class="login-text">
+            Already have an account?
+            <a (click)="dataBag.navigateTo('/login')" style="cursor: pointer; text-decoration: underline;">Login</a>
+          </p>
+        </form>
+      </div>
     </div>
   </div>
 </div>

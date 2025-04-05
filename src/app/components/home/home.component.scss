@@ -1,304 +1,122 @@
-// // /* Video container - Grid Layout */
-// // .video-container {
-// //     display: grid;
-// //     grid-template-columns: repeat(4, 1fr);
-// //     /* Default: 4 videos per row */
-// //     gap: 20px;
-// //     /* Adjust spacing between videos */
-// //     justify-content: center;
-// //     padding: 20px;
-// // }
-
-// // /* Video card */
-// // .video-card {
-// //     width: 100%;
-// //     /* Ensures it fits within grid */
-// //     height: 250px;
-// //     /* Increased height */
-// //     border: 2px solid red;
-// //     /* Red border */
-// //     padding: 10px;
-// //     border-radius: 10px;
-// //     text-align: center;
-// //     cursor: pointer;
-// //     transition: transform 0.3s;
-// //     background-color: white;
-// // }
-
-// // /* Hover effect */
-// // .video-card:hover {
-// //     transform: scale(1.05);
-// // }
-
-// // /* Video Wrapper */
-// // .video-wrapper {
-// //     width: 100%;
-// //     height: 180px;
-// //     background: black;
-// //     display: flex;
-// //     align-items: center;
-// //     justify-content: center;
-// //     overflow: hidden;
-// // }
-
-// // .video-wrapper iframe,
-// // .video-wrapper img {
-// //     width: 100%;
-// //     height: 100%;
-// //     object-fit: cover;
-// // }
-
-// // /* Video Description */
-// // .video-description {
-// //     color: white;
-// //     background-color: lightcoral;
-// //     padding: 5px;
-// //     border-radius: 5px;
-// //     font-size: 14px;
-// // }
-
-// // /* Fullscreen Modal */
-// // .fullscreen-modal {
-// //     position: fixed;
-// //     top: 0;
-// //     left: 0;
-// //     width: 100%;
-// //     height: 100%;
-// //     background: rgba(0, 0, 0, 0.9);
-// //     display: flex;
-// //     align-items: center;
-// //     justify-content: center;
-// // }
-
-// // /* Fullscreen Content */
-// // .fullscreen-content {
-// //     background: white;
-// //     padding: 20px;
-// //     border-radius: 10px;
-// //     text-align: center;
-// //     position: relative;
-// // }
-
-// // /* Fullscreen Video */
-// // .fullscreen-content iframe {
-// //     width: 90vw;
-// //     height: 60vh;
-// // }
-
-// // /* Close Button */
-// // .close-btn {
-// //     position: absolute;
-// //     top: 10px;
-// //     right: 10px;
-// //     background: red;
-// //     color: white;
-// //     border: none;
-// //     padding: 5px 10px;
-// //     font-size: 20px;
-// //     cursor: pointer;
-// // }
-
-// // /* ✅ RESPONSIVE DESIGN */
-
-// // /* 📌 Tablet View (≤ 1024px) - Show 2 videos per row */
-// // @media screen and (max-width: 1024px) {
-// //     .video-container {
-// //         grid-template-columns: repeat(2, 1fr);
-// //         /* 2 videos per row */
-// //     }
-// // }
-
-// // /* 📌 Mobile View (≤ 600px) - Show 1 video per row */
-// // @media screen and (max-width: 600px) {
-// //     .video-container {
-// //         grid-template-columns: repeat(1, 1fr);
-// //         /* 1 video per row */
-// //     }
-// // }
-
-
-
-// .container {
-//     max-width: 1200px;
-//     margin: auto;
-//     padding: 10px;
-//   }
-  
-//   .categories {
-//     display: flex;
-//     gap: 10px;
-//     overflow-x: auto;
-//     white-space: nowrap;
-//     margin-bottom: 20px;
-//     padding: 10px 0;
-  
-//     button {
-//       background: #eee;
-//       border: none;
-//       padding: 8px 15px;
-//       border-radius: 20px;
-//       cursor: pointer;
-//       transition: 0.3s;
-      
-//       &.active, &:hover {
-//         background: #ff0000;
-//         color: white;
-//       }
-//     }
-//   }
-  
-//   .video-grid {
-//     display: grid;
-//     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-//     gap: 20px;
-  
-//     .video-card {
-//       background: #fff;
-//       padding: 10px;
-//       border-radius: 10px;
-//       text-align: center;
-//       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  
-//       img {
-//         width: 100%;
-//         border-radius: 10px;
-//       }
-  
-//       h3 {
-//         font-size: 1.1em;
-//         margin: 10px 0 5px;
-//       }
-  
-//       p {
-//         color: #666;
-//         font-size: 0.9em;
-//       }
-//     }
-//   }
-  
-
 .container {
-    max-width: 1200px;
-    margin: auto;
-    padding: 10px;
-    margin-top: 5%;
+  max-width: 1200px;
+  margin: auto;
+  padding: 10px;
+  margin-top: 5%;
 
-    @media (max-width: 767px) {
-        margin-top: 20%;
-    }
+  @media (max-width: 767px) {
+    margin-top: 20%;
   }
-  
-  /* Search Bar */
-  .search-bar {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-  }
-  
-  /* Categories */
-  .categories {
-    display: flex;
-    gap: 10px;
-    overflow-x: auto;
-    white-space: nowrap;
-    margin-bottom: 20px;
-    padding: 10px 0;
-  
-    button {
-      background: #eee;
-      border: none;
-      padding: 8px 15px;
-      border-radius: 20px;
-      cursor: pointer;
-      transition: 0.3s;
-  
-      &.active,
-      &:hover {
-        background: #ff0000;
-        color: white;
-      }
-    }
-  }
-  
-  /* Video Grid */
-  .video-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-  }
-  
-  .video-card {
-    background: #fff;
-    padding: 10px;
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Search Bar */
+.search-bar {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+/* Categories */
+.categories {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  white-space: nowrap;
+  margin-bottom: 20px;
+  padding: 10px 0;
+
+  button {
+    background: #eee;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 20px;
     cursor: pointer;
-    transition: transform 0.3s;
-  
+    transition: 0.3s;
+
+    &.active,
     &:hover {
-      transform: scale(1.05);
-    }
-  
-    img,
-    video {
-      width: 100%;
-      border-radius: 10px;
-      object-fit: cover;
-    }
-  
-    h3 {
-      font-size: 1.1em;
-      margin: 10px 0 5px;
-    }
-  
-    p {
-      color: #666;
-      font-size: 0.9em;
+      background: #ff0000;
+      color: white;
     }
   }
-  
-  /* Fullscreen Video */
-  .fullscreen-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
+}
+
+/* Video Grid */
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.video-card {
+  background: #fff;
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.3s;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  img,
+  video {
     width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.9);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .fullscreen-content {
-    background: white;
-    padding: 20px;
     border-radius: 10px;
-    text-align: center;
-    position: relative;
-  }
-  
-  .fullscreen-video {
-    width: 90vw;
-    height: 60vh;
     object-fit: cover;
   }
-  
-  /* Rotate Video on Mobile */
-  @media screen and (max-width: 768px) {
-    .fullscreen-video {
-      transform: rotate(90deg);
-      width: 100vh;
-      height: 100vw;
-    }
-  
-    .video-grid {
-      grid-template-columns: repeat(1, 1fr);
-    }
+
+  h3 {
+    font-size: 1.1em;
+    margin: 10px 0 5px;
   }
-  
-  
-  
+
+  p {
+    color: #666;
+    font-size: 0.9em;
+  }
+}
+
+/* Fullscreen Video */
+.fullscreen-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fullscreen-content {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  position: relative;
+}
+
+.fullscreen-video {
+  width: 90vw;
+  height: 60vh;
+  object-fit: cover;
+}
+
+/* Rotate Video on Mobile */
+@media screen and (max-width: 768px) {
+  .fullscreen-video {
+    transform: rotate(90deg);
+    width: 100vh;
+    height: 100vw;
+  }
+
+  .video-grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}

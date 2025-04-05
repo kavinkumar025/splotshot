@@ -5,14 +5,33 @@
         <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
             <div class="input-group">
                 <label>Email</label>
-                <input type="email" formControlName="email" placeholder="Enter your email">
-                <span *ngIf="email.invalid && email.touched" class="error">Invalid email</span>
+                <input type="email" formControlName="email" placeholder="Enter your email" maxlength="40" />
+                <span *ngIf="email.touched && email.errors?.['required']" class="error">Email is required</span>
+                <span *ngIf="email.touched && email.errors?.['invalidEmailFormat']" class="error">Enter a valid
+                    email</span>
+                <span *ngIf="email.touched && email.errors?.['noSpaces']" class="error">Spaces are not allowed</span>
             </div>
             <div class="input-group">
                 <label>Password</label>
-                <input type="password" formControlName="password" placeholder="Enter your password">
-                <span *ngIf="password.invalid && password.touched" class="error">Password must be at least 6
-                    characters</span>
+                <input [type]="showPassword ? 'text' : 'password'" formControlName="password"
+                    placeholder="Enter your password" maxlength="40" />
+                <div class="password-wrapper">
+                    <button type="button" class="toggle-btn" (click)="showPassword = !showPassword">
+                        <span *ngIf="!showPassword">👁️</span>
+                        <span *ngIf="showPassword">🙈</span>
+                    </button>
+                </div>
+                <span *ngIf="password.touched && password.errors?.['required']" class="error">Password is
+                    required</span>
+                <span *ngIf="password.touched && !password.errors?.['required'] && password.errors?.['minlength']"
+                    class="error">
+                    Min 6 characters required
+                </span>
+                <span
+                    *ngIf="password.touched && !password.errors?.['required'] && !password.errors?.['minlength'] && password.errors?.['passwordStrength']"
+                    class="error">
+                    Must include uppercase, lowercase, number & special character
+                </span>
             </div>
             <button type="submit" class="login-btn">Login</button>
         </form>

@@ -1,5 +1,9 @@
-<div *ngIf="dataBag.isLoggedIn()">
+<div class="bg-colour">
     <app-header></app-header>
-    <app-sidebar></app-sidebar>
+    <div *ngIf="dataBag.isLoggedIn()">
+        <app-sidebar></app-sidebar>
+    </div>
+    <div class="content-wrapper">
+        <router-outlet></router-outlet>
+    </div>
 </div>
-<router-outlet></router-outlet>

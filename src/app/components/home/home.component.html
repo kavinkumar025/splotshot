@@ -1,34 +1,11 @@
-<!-- <div class="video-container mt-5 ml-5 pl-5 pt-5">
-  <div class="video-card" *ngFor="let video of videos" (mouseenter)="playHoverVideo(video)"
-    (mouseleave)="stopHoverVideo()" (click)="openFullVideo(video)">
-
-    <div class="video-wrapper">
-      <iframe *ngIf="hoveredVideo === video" [src]="getSafeUrl(video.url)" frameborder="0" allowfullscreen>
-      </iframe>
-      <img *ngIf="hoveredVideo !== video" [src]="'https://img.youtube.com/vi/' + video.id + '/hqdefault.jpg'"
-        (error)="setDefaultThumbnail($event)" alt="Video Thumbnail">
-    </div>
-    <p class="video-description">{{ video.title }}</p>
-  </div>
-</div>
-<div class="video-modal" *ngIf="isVideoOpen" (click)="closeVideo()">
-  <div class="video-content" (click)="stopClick($event)">
-    <span class="close-btn" (click)="closeVideo()">&times;</span>
-    <div id="youtubePlayer"></div>
-  </div>
-</div> -->
 <div class="container">
-  <!-- Search Bar -->
   <input type="text" class="search-bar" placeholder="Search videos..." (input)="filterVideos($event)" />
-
-  <!-- Categories -->
   <div class="categories">
     <button *ngFor="let category of categories" (click)="selectCategory(category)"
       [class.active]="selectedCategory === category">
       {{ category }}
     </button>
   </div>
-
   <!-- Video Grid -->
   <div class="video-grid">
     <div class="video-card" *ngFor="let video of filteredVideos" (click)="openVideo(video)">
@@ -43,7 +20,6 @@
     </div>
   </div>
 </div>
-
 <!-- Fullscreen Video Modal -->
 <div class="fullscreen-modal" *ngIf="isVideoOpen" (click)="closeVideo()">
   <div class="fullscreen-content" (click)="stopClick($event)">

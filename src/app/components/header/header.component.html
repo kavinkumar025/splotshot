@@ -4,7 +4,7 @@
       <!-- Logo -->
       <div class="logo">Your Logo</div>
       <!-- Desktop Navigation (hidden on tablets & mobile) -->
-      <nav class="nav d-none d-lg-block">
+      <nav *ngIf="dataBag.isLoggedIn()" class="nav d-none d-lg-block">
         <ul class="d-flex">
           <li><a (click)="dataBag.navigateTo('/home')">Home</a></li>
           <li><a (click)="dataBag.navigateTo('/services')">Services</a></li>
@@ -13,7 +13,7 @@
         </ul>
       </nav>
       <!-- Account Section (Desktop) -->
-      <div class="account-section d-none d-lg-flex align-items-center">
+      <div *ngIf="dataBag.isLoggedIn()" class="account-section d-none d-lg-flex align-items-center">
         <span class="username">Welcome, {{ userName }}</span>
         <button class="logout-btn" (click)="logout()">Logout</button>
       </div>
@@ -24,7 +24,7 @@
     </div>
   </div>
   <!-- Mobile Navigation -->
-  <nav class="mobile-nav" [class.show]="menuOpen">
+  <nav *ngIf="dataBag.isLoggedIn()" class="mobile-nav" [class.show]="menuOpen">
     <ul>
       <li><a (click)="dataBag.navigateTo('/home')">Home</a></li>
       <li><a (click)="dataBag.navigateTo('/services')">Services</a></li>
@@ -36,5 +36,13 @@
       <span class="username">Welcome, {{ userName }}</span>
       <button class="logout-btn" (click)="logout()">Logout</button>
     </div>
+  </nav>
+
+  <nav *ngIf="!dataBag.isLoggedIn()" class="mobile-nav" [class.show]="menuOpen">
+    <ul>
+      <li><a (click)="dataBag.navigateTo('/login')">Login</a></li>
+      <li><a (click)="dataBag.navigateTo('/register')">Register</a></li>
+      <li><a (click)="dataBag.navigateTo('/services')">Services</a></li>
+    </ul>
   </nav>
 </header>
