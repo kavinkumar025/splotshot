@@ -35,6 +35,7 @@
             ],
             "styles": [
               "src/styles.scss",
+              "src/styles/theme.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
             "scripts": [],
@@ -100,6 +101,7 @@
             ],
             "styles": [
               "src/styles.scss",
+              "src/styles/theme.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
             "scripts": []

@@ -1,0 +1,23 @@
+:root {
+    /* Primary Colors */
+    --color-primary: #ff4b5c;
+    --color-primary-hover: #d43f50;
+    --color-gradient-start: #ff4b5c;
+    --color-gradient-end: #ff6b81;
+
+    /* Backgrounds */
+    --color-body-bg: #ffe6e6;
+    --color-login-box-bg: #ffffff;
+
+    /* Text */
+    --color-heading: #ff4b5c;
+    --color-error: red;
+    --color-placeholder: #888;
+    --color-disabled: #ccc;
+
+    /* Borders & Shadows */
+    --color-border: #ddd;
+    --color-box-shadow: rgba(0, 0, 0, 0.25);
+    --color-hover-shadow: rgba(0, 0, 0, 0.3);
+    --color-focus-shadow: rgba(255, 75, 92, 0.5);
+}
