@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule, A
 import { CommonModule, isPlatformBrowser } from "@angular/common";
 import { Router } from '@angular/router';
 import { DataBagService } from '../components/data-bag.service';
-
+import { Auth, signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-login',
@@ -19,6 +19,7 @@ export class LoginComponent {
   public fb = inject(FormBuilder);
   public router = inject(Router);
   public dataBag = inject(DataBagService);
+  public auth = inject(Auth);
   public showPassword = false;
 
   public loginForm: FormGroup = this.fb.group({
@@ -36,19 +37,35 @@ export class LoginComponent {
 
   public onLogin() {
     if (this.loginForm.valid) {
-      const trimmedEmail = this.email.value.trim();
-      this.loginForm.patchValue({ email: trimmedEmail });
-      console.log("Login Successful", this.loginForm.value);
-      // Simulate API success
-      localStorage.setItem("loggedIn", "true");
-      this.router.navigate(['/home']);
+      const email = this.email.value.trim();
+      const password = this.password.value;
+  
+      this.loginForm.patchValue({ email }); // Optional: update trimmed email
+  
+      signInWithEmailAndPassword(this.auth, email, password)
+        .then(userCredential => {
+          console.log("Login Successful", userCredential.user);
+          localStorage.setItem("loggedIn", "true");
+          this.router.navigate(['/home']);
+        })
+        .catch(error => {
+          console.error("Login failed:", error);
+          // Show error message to user if needed
+        });
     } else {
       this.loginForm.markAllAsTouched();
     }
   }
 
   public loginWithGoogle() {
-    console.log('Google login clicked');
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(this.auth, provider)
+      .then(result => {
+        console.log('Logged in with Google:', result.user);
+        localStorage.setItem('loggedIn', 'true');
+        this.router.navigate(['/home']);
+      })
+      .catch(err => console.error('Login error:', err));
   }
 
   public noSpaceValidator(control: any) {

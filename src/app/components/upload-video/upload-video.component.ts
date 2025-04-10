@@ -1,6 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Firestore, collection, addDoc } from '@angular/fire/firestore';
+import { Storage, ref, uploadBytes, getDownloadURL } from '@angular/fire/storage';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-upload-video',
@@ -24,7 +27,11 @@ export class UploadVideoComponent {
   uploadProgress = 0;
   thumbnail: string | null = null;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private storage: Storage,
+    private firestore: Firestore
+  ) {
     this.videoForm = this.fb.group({
       title: ['', Validators.required],
       description: ['', Validators.required],
@@ -124,9 +131,48 @@ export class UploadVideoComponent {
     }, 1000);
   }
 
-  onSubmit() {
-    console.log('Form Data:', this.videoForm.value);
-    console.log('Thumbnail:', this.thumbnail);
+  async onSubmit() {
+    if (!this.selectedFile || !this.thumbnail) {
+      this.fileError = 'Please upload a video and wait for thumbnail generation.';
+      return;
+    }
+
+    try {
+      this.isLoading = true;
+      const videoId = uuidv4();
+
+      // Upload video to Firebase Storage
+      const videoRef = ref(this.storage, `videos/${videoId}`);
+      await uploadBytes(videoRef, this.selectedFile);
+      const videoURL = await getDownloadURL(videoRef);
+
+      // Upload thumbnail
+      const thumbnailBlob = await fetch(this.thumbnail).then(res => res.blob());
+      const thumbRef = ref(this.storage, `thumbnails/${videoId}.jpg`);
+      await uploadBytes(thumbRef, thumbnailBlob);
+      const thumbnailURL = await getDownloadURL(thumbRef);
+
+      // Save metadata to Firestore
+      const videosCollection = collection(this.firestore, 'videos');
+      await addDoc(videosCollection, {
+        ...this.videoForm.value,
+        videoURL,
+        thumbnailURL,
+        createdAt: new Date()
+      });
+
+      alert('Video uploaded successfully!');
+      this.videoForm.reset();
+      this.selectedFile = null;
+      this.videoPreview = null;
+      this.thumbnail = null;
+
+    } catch (error) {
+      console.error('Upload failed:', error);
+      alert('Upload failed. Please try again.');
+    } finally {
+      this.isLoading = false;
+    }
   }
 
 }
